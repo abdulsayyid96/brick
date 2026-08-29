@@ -1,0 +1,313 @@
+/* ============================================
+   BRICK - Time Block App
+   Design System: Dark Forge
+   ============================================ */
+
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* === Design Tokens === */
+:root,
+[data-theme="dark"] {
+  /* Background layers */
+  --bg-base: #07070B;
+  --bg-surface: #0E0E14;
+  --bg-elevated: #15151E;
+  --bg-card: #1A1A26;
+  --bg-hover: #22222F;
+  --header-bg: rgba(7, 7, 11, 0.85);
+  --overlay-bg: rgba(7, 7, 11, 0.9);
+
+  /* Accent - Warm Amber */
+  --accent: #e87a3a;
+  --accent-light: #f5744d;
+  --accent-glow: rgba(232, 146, 58, 0.15);
+  --accent-glow-strong: rgba(232, 146, 58, 0.3);
+  --accent-dim: #b82222;
+
+  /* Secondary - Cool Slate */
+  --secondary: #6C7A96;
+  --secondary-light: #8B9AB8;
+
+  /* Status */
+  --success: #4ADE80;
+  --success-glow: rgba(74, 222, 128, 0.15);
+  --danger: #F87171;
+  --danger-glow: rgba(248, 113, 113, 0.15);
+  --info: #60A5FA;
+
+  /* Text */
+  --text-primary: #F0EDE6;
+  --text-secondary: #9B95A0;
+  --text-muted: #5A5565;
+  --text-inverse: #07070B;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-accent: rgba(232, 146, 58, 0.25);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 100px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+  --shadow-float: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-glow);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Typography */
+  --font-sans: "Public Sans", sans-serif;
+  --font-mono: "Public Sans", sans-serif;
+}
+
+[data-theme="light"] {
+  /* Background layers */
+  --bg-base: #F4F4F6;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #E8E8EE;
+  --bg-card: #FFFFFF;
+  --bg-hover: #ECECF2;
+  --header-bg: rgba(244, 244, 246, 0.85);
+  --overlay-bg: rgba(244, 244, 246, 0.9);
+
+  /* Accent - Warm Amber */
+  --accent: #e87a3a;
+  --accent-light: #d66424;
+  --accent-glow: rgba(232, 122, 58, 0.15);
+  --accent-glow-strong: rgba(232, 122, 58, 0.3);
+  --accent-dim: #c54a1a;
+
+  /* Secondary - Cool Slate */
+  --secondary: #64748B;
+  --secondary-light: #475569;
+
+  /* Status */
+  --success: #16A34A;
+  --success-glow: rgba(22, 163, 74, 0.15);
+  --danger: #DC2626;
+  --danger-glow: rgba(220, 38, 38, 0.15);
+  --info: #2563EB;
+
+  /* Text */
+  --text-primary: #121217;
+  --text-secondary: #52525D;
+  --text-muted: #8E8E9A;
+  --text-inverse: #FFFFFF;
+
+  /* Borders */
+  --border: rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(232, 122, 58, 0.35);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+  --shadow-float: 0 8px 30px rgba(0, 0, 0, 0.12), 0 0 20px var(--accent-glow);
+}
+
+/* === Reset === */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+}
+
+/* === Utility Animations === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 40px var(--accent-glow-strong);
+  }
+}
+
+@keyframes breathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes timerPulse {
+
+  0%,
+  100% {
+    text-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  50% {
+    text-shadow: 0 0 60px var(--accent-glow-strong), 0 0 100px var(--accent-glow);
+  }
+}
+
+@keyframes brickStack {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-glow-strong);
+  color: var(--text-primary);
+}
