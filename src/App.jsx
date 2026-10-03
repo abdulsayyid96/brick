@@ -123,6 +123,17 @@ export default function App() {
     setBricks((prev) => [...prev, { id: genId(), ...task }]);
   }, []);
 
+  const addBricks = useCallback((tasks) => {
+    const newBricks = tasks.map((t) => ({
+      id: genId(),
+      title: t.title,
+      duration: t.duration,
+      isSubTask: t.isSubTask || false,
+    }));
+    setBricks((prev) => [...prev, ...newBricks]);
+  }, []);
+
+
   const deleteBrick = useCallback((id) => {
     setBricks((prev) => prev.filter((b) => b.id !== id));
   }, []);
@@ -263,6 +274,7 @@ export default function App() {
       {view === 'stack' && (
         <FloatingInput
           onAddManual={addBrick}
+          onAddBatch={addBricks}
           onAddAI={handleAIGenerate}
           isAILoading={isAILoading}
         />

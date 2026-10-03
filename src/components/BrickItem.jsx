@@ -8,7 +8,7 @@ export default function BrickItem({ brick, onPlay, onEdit, onDelete, index }) {
     const h = Math.floor(minutes / 60);
     const m = minutes % 60;
     if (h > 0) return `${h}h ${m > 0 ? `${m}m` : ''}`;
-    return `${m}m`;
+    return `${m} minutes`;
   };
 
   // Min height 48px, scales with duration (1 min = 1.5px extra height beyond base)
@@ -30,8 +30,11 @@ export default function BrickItem({ brick, onPlay, onEdit, onDelete, index }) {
         <div className="brick-info">
           <div className="brick-title">{brick.title}</div>
           <div className="brick-time-duration">
-            <div className={`brick-label ${brick.isSubTask ? 'sub-brick' : ''}`}>{brick.isSubTask ? "Generated" : "Created"}</div>
-            <div className="brick-duration">{formatDuration(brick.duration)}</div>
+            {/* <div className={`brick-label ${brick.isSubTask ? 'sub-brick' : ''}`}>{brick.isSubTask ? "Generated" : "Created"}</div> */}
+            <div className={`brick-label`}>
+              <div className="">{formatDuration(brick.duration)}</div>
+            </div>
+            {/* <div className="brick-duration">{formatDuration(brick.duration)}</div> */}
           </div>
         </div>
         <div className="brick-actions" style={{ opacity: isHovered ? 1 : undefined }}>

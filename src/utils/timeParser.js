@@ -86,3 +86,59 @@ export function formatParsedDuration(totalMinutes) {
   if (h > 0) return `${h}h`;
   return `${m}m`;
 }
+
+/**
+ * Parses a JSON string that represents an array of task time-blocks.
+ * Handles variations in property names:
+ * - Title: task, title, name
+ * - Duration: duration_minutes, duration, durationMinutes, mins, minutes
+ */
+export function parseJsonTimeBlocks(text) {
+  if (!text || typeof text !== 'string') return null;
+
+  const trimmed = text.trim();
+  if (!trimmed.startsWith('[') || !trimmed.endsWith(']')) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(trimmed);
+    if (!Array.isArray(parsed) || parsed.length === 0) return null;
+
+    const validTasks = [];
+
+    for (const item of parsed) {
+      if (!item || typeof item !== 'object') continue;
+
+      const rawTitle = item.task || item.title || item.name;
+      const rawDuration =
+        item.duration_minutes ??
+        item.duration ??
+        item.durationMinutes ??
+        item.mins ??
+        item.minutes;
+
+      if (!rawTitle || typeof rawTitle !== 'string') continue;
+
+      let duration = 0;
+      if (typeof rawDuration === 'number') {
+        duration = rawDuration;
+      } else if (typeof rawDuration === 'string') {
+        const parsedDur = parseTaskInput(rawDuration);
+        duration = parsedDur.duration || parseInt(rawDuration, 10) || 0;
+      }
+
+      if (duration > 0 && rawTitle.trim()) {
+        validTasks.push({
+          title: rawTitle.trim(),
+          duration: Math.round(duration),
+        });
+      }
+    }
+
+    return validTasks.length > 0 ? validTasks : null;
+  } catch (err) {
+    return null;
+  }
+}
+
